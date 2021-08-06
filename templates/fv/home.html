@@ -1,0 +1,58 @@
+<!DOCTYPE lang="en">
+<html>
+    <head>
+        <title>Form Validation - Powered by ABC</title>
+        <link type="text/css" rel="stylesheet" href="{{ url_for('static',filename='bootstrap/css/bootstrap.min.css')}}">
+    </head>
+    <body>
+        <div class="container d-flex justify-content-center p-5" >
+            <form method="POST" action = "{{ url_for('fv_home') }}" class="w-50 p-7">
+              <div class="message list-group">
+                {% if messages %}
+                {%for message in messages%}
+                <div class=" alert alert-{{message.type}}">{{message.message}}</div>
+                {%endfor%}
+                {%endif%}
+              </div>
+                <div class="form-group">
+                    Name:
+                    <input type="text" name="name" class="form-group-item form-control">
+                    <div class="form-group-item text-muted small">Your Full Name</div>
+                </div>
+                <div class="form-group">
+                    Age:
+                    <input type="number" name="age" class="form-group-item form-control">
+                    <div class="form-group-item text-muted small">>18</div>
+                </div>
+                <div class="form-group">
+                  Gender:
+                  <input type="text" name="gender" class="form-group-item form-control">
+                  
+              </div>
+                <div class="form-group">
+                    Email
+                    <input type="email" name="email" class="form-group-item form-control">
+                    <div class="form-group-item text-muted small"></div>
+                </div>
+                <div class="form-group">
+                    Address:
+                    <input type="text" name="address" class="form-group-item form-control">
+                    <div class="form-group-item text-muted small"></div>
+                </div>
+                <div class="form-group">
+                    Photo:
+                    <input type="file" name="photo" class="form-group-item form-control">
+                    <div class="form-group-item text-muted small">Alogn with your Certificate</div>
+                </div>
+                <div class="form-group">
+                    Certificate:
+                    <input type="file" name="certificate" class="form-group-item form-control">
+                    <div class="form-group-item text-muted small">Citizenship or Passport</div>
+                </div>
+                <button class="btn btn-info form-control" type="submit" value="submit1" name="submitForm">Submit</button>
+            </form>
+        </div>
+    </body>
+    <script src="{{ url_for('static', filename='bootstrap/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='bootstrap/js/bootstrap.min.js')}}"></script>
+</html>
