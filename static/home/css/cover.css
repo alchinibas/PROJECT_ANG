@@ -51,3 +51,15 @@ body {
   color: #fff;
   border-bottom-color: #fff;
 }
+@keyframes focusit{
+  from{
+    box-shadow:0px 0px 2px 2px white;
+  }
+  to{
+    box-shadow:none;
+  }
+}
+.focus{
+  border-radius:10px;
+  animation:focusit .8s linear;
+}

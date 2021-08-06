@@ -41,7 +41,7 @@
       <h3 class="float-md-start mb-0">ANG</h3>
       <nav class="nav nav-masthead justify-content-center float-md-end">
         <a class="nav-link active" aria-current="page" href="/">Home</a>
-        <a class="nav-link" href="#">GET API</a>
+        <a class="nav-link" id="getapi"href="javascript:void(0)">GET API</a>
         <a class="nav-link" href="{{ url_for('fv_home')}}">Test FV</a>
         <a class="nav-link" href="{{url_for('gov_home')}}">GOV Demo</a>
       </nav>
@@ -50,11 +50,21 @@
 
   <main class="px-3">
     <h1>Welcome to ANG</h1>
+    {% if messages %}
+    {%for message in messages %}
+    <p class="lead text-white">{{message.message}}</p>
+    {%endfor %}
+    {% else %}
     <p class="lead">
       Getting tired of fake resume and regular fake profile checks? Don't worry we bring you here the audacity to protect your valuable time. Just let your problem handled by our API. Register for now to get free service and start your session.
     </p>
+    {% endif %}
     <p class="lead">
-      <a href="#" class="btn btn-lg btn-secondary fw-bold border-white bg-white text-dark">Register</a>
+      <form method="POST" action="{{url_for('register')}}">
+          <input class="form-control bg-transparent mb-3 mt-5 text-white" id="email"type="email" name="email" placeholder="Email">
+        <button type="submit" class="btn btn-lg btn-secondary fw-bold border-white bg-white text-dark">Register</button>
+    </form>
+      
     </p>
   </main>
 
@@ -62,9 +72,14 @@
     <p>Powered by <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>, by <a href="https://twitter.com/mdo" class="text-white">@mdo</a>.</p>
   </footer>
 </div>
-
-
-    
-  
-
+<script type="text/javascript">
+  var getapi=document.querySelector("#getapi",).addEventListener("click",registerFocus);
+  function registerFocus(){
+    var email=document.getElementById("email");
+    var lead=document.querySelector(".lead");
+    lead.innerHTML="Get your API by registering your email below. If you have already registered your email, no problem, we will send you your pervious API key.";
+    lead.classList.add('focus');
+    email.focus();
+  }
+</script>
 </body></html>
