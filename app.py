@@ -20,6 +20,10 @@ def message(msg):
 def home():
     return render_template("home/home.html", messages=messages)
 
+@app.route("/help",methods=['GET','POST'])
+def api_help():
+    return render_template("home/using_api.html")
+
 @app.route("/fv/", methods=['GET'])
 def fv_home():
     messages=[]

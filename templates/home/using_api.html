@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html class="h-100" lang="en"><head>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
@@ -40,9 +41,9 @@
     <div>
       <h3 class="float-md-start mb-0">ANG</h3>
       <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link active" aria-current="page" href="/">Home</a>
-        <a class="nav-link" id="getapi"href="javascript:void(0)">GET API</a>
-        <a class="nav-link" id="getapi"href="{{url_for('api_help')}}">GET API</a>
+        <a class="nav-link" aria-current="page" href="/">Home</a>
+        <a class="nav-link" id="getapi"href="{{url_for('home')}}">GET API</a>
+        <a class="nav-link active" href="{{url_for('api_help')}}">USING API</a>
         <a class="nav-link" href="{{ url_for('fv_home')}}">Test FV</a>
         <a class="nav-link" href="{{url_for('gov_home')}}">GOV Demo</a>
       </nav>
@@ -57,7 +58,9 @@
     {%endfor %}
     {% else %}
     <p class="lead">
-      Getting tired of fake resume and regular fake profile checks? Don't worry we bring you here the audacity to protect your valuable time. Just let your problem handled by our API. Register for now to get free service and start your session.
+        ANG is based on python Machine learning system with simple AI that predicts the age gap and the gender through your provided image file. It provides the additional feature to verify the clients profile through live video stream request.This is an extra feature that you need to access.
+        By default you access our api using oururl.com/getclass/api_key, where the api key is providedthrough you email. 
+        For the live image verification, you need an extra field with the following details.
     </p>
     {% endif %}
     <p class="lead">

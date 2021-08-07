@@ -24,7 +24,7 @@ class Users(db.Model):
     key=db.Column(db.String(128),nullable=False)
 
     def __repr__(self)->str:
-        return f'{email}'
+        return f'{self.email}'
 
 if __name__=="__main__":
     print("This is not a run file")
