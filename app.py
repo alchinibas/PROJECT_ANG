@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request,redirect
+from flask import Flask, render_template, request,redirect, Response
 from flask_sqlalchemy import SQLAlchemy
 from models.models import Information, Users
 from flask_restful import Api, Resource, reqparse
 from flask_mail import Mail
 from data import data
+import cv2
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///models/ang.db"
@@ -80,6 +81,29 @@ def register():
                 html="<h2>Welcome to ANG</h2> Your api key is \n"+ids
             )
     return redirect('../')
+
+
+camera=cv2.VideoCapture(0)
+
+def get_frames():
+    while True:
+        success,frame=camera.read()
+        if not success:
+            break
+        else:
+            ret,buffer=cv2.imencode('.jpg',frame)
+            frame=buffer.tobytes()
+            yield(
+                b'--frame\r\n'
+                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n'
+            )
+
+@app.route('/video')
+def video():
+    return render_template('fv/videotest.html')
+@app.route('/getvideo')
+def get_video():
+    return Response(get_frames(), mimetype="multipart/x-mixed-replace;boundary=frame")
 
 
 ###api
