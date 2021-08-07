@@ -2,11 +2,21 @@ from flask import Flask, render_template, request,redirect
 from flask_sqlalchemy import SQLAlchemy
 from models.models import Information, Users
 from flask_restful import Api, Resource, reqparse
-
+from flask_mail import Mail
+from data import data
 app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///models/ang.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+app.config.update(
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT='465',
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME=data['gmail'],
+    MAIL_PASSWORD=data['password'],
+)
+mail=Mail(app)
+
 db = SQLAlchemy(app)
 
 
@@ -54,10 +64,21 @@ def register():
         id1 = hashlib.md5(str(datetime.utcnow().strftime("%y%m%d%H%M%S%f")).encode(encoding="utf-8")).hexdigest()
         id2 = hashlib.md5(email.encode(encoding="utf-8")).hexdigest()
         ids = id1+id2
-        user = Users(email=email,key=ids)
-        db.session.add(user)
-        db.session.commit()
-        messages=message({"type":"success","message":"Email submitted successfully. You key is sent via your email."+ids})
+        check_existing = Users.query.filter_by(email=email).first()
+        if check_existing:
+            ids = check_existing.key
+            messages=message({"type":"success","message":"Your email is already registered. Your api key is sent via your email."})
+        else:
+            user = Users(email=email,key=ids)
+            db.session.add(user)
+            db.session.commit()
+            messages=message({"type":"success","message":"Email submitted successfully. You key is sent via your email. "})
+        mail.send_message(
+                "API key from PROJECT_ANG",
+                sender=data['gmail'],
+                recipients=[email,],
+                html="<h2>Welcome to ANG</h2> Your api key is \n"+ids
+            )
     return redirect('../')
 
 
