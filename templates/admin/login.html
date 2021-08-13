@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static',filename='bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+    <title>Admin Login | ANG</title>
+</head>
+<body class="container" style="min-height:400px;position:relative;">
+    <div class="form m-auto w-50" style="max-width:300px;min-width:150px;">
+        <div class="logo py-5 m-auto">
+            <img src="" class="m-auto" alt="LOGO" style="display:block;">
+            <h3  style="display:block;margin:0 auto;">PROJECT_ANG</h3>
+        </div>
+        <form method="POST" action="{{url_for('login_authenticate') }}"class="">
+            <input type="email" placeholder="Email" name="email" class="form-control bg-transparent my-2" required/>
+            <input type="password" placeholder="Password"name="password" password="password" class="form-control bg-transparent my-2 " required/>
+            <button type="submit" name="submit" class="btn btn-outline-info form-control">Login</button>
+        </form>
+    </div>
+    <footer class="text-center w-100  small" style="position:absolute;bottom:10px;">
+        ANG_PROJECT login page since 2021
+    </footer>
+</body>
+<script src="{{ url_for('static',filename='bootstrap/js/bootstrap.min.js')}} "></script>
+<script>
+    window.onload=start;
+    function start(){
+        var height=document.documentElement.clientHeight;
+        document.body.style.height=height-100+"px";
+    }
+    window.onresize=start;
+</script>
+</html>

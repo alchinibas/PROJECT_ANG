@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html style="height: auto;" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ANG | Dashboard</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="{{url_for('static',filename='admin/dashboard/css.css')}}">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.css">
+  <!-- Ionicons -->
+  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='admin/dashboard/ionicons.css' )}}"> -->
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="{{url_for('static',filename='admin/dashboard/tempusdominus-bootstrap-4.css')}}">
+  <!-- iCheck -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/dashboard/icheck-bootstrap.css' )}}">
+  <!-- JQVMap -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/dashboard/jqvmap.css' )}}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/dashboard/adminlte.css' )}}">
+  <!-- overlayScrollbars -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/dashboard/OverlayScrollbars.css' )}}">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/dashboard/daterangepicker.css' )}}">
+  <!-- summernote -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='admin/dashboard/summernote-bs4.css' )}}">
+<style type="text/css">/* Chart.js */
+@keyframes chartjs-render-animation{from{opacity:.99}to{opacity:1}}.chartjs-render-monitor{animation:chartjs-render-animation 1ms}.chartjs-size-monitor,.chartjs-size-monitor-expand,.chartjs-size-monitor-shrink{position:absolute;direction:ltr;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1}.chartjs-size-monitor-expand>div{position:absolute;width:1000000px;height:1000000px;left:0;top:0}.chartjs-size-monitor-shrink>div{position:absolute;width:200%;height:200%;left:0;top:0}</style></head>
+<body class="sidebar-mini layout-fixed" style="height: auto;">
+<div class="wrapper">
+
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center" style="height: 0px;">
+    <img class="animation__shake" src="{{ url_for('static', filename='admin/test-logo.png' )}}" alt="AdminLTELogo" width="60" height="60">
+  </div>
+
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="https://adminlte.io/themes/v3/index3.html" class="brand-link">
+      <img src="{{ url_for('static', filename='admin/test-logo.png' )}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">PROJECT_ANG</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar os-host os-theme-light os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition"><div class="os-resize-observer-host observed"><div class="os-resize-observer" style="left: 0px; right: auto;"></div></div><div class="os-size-auto-observer observed" style="height: calc(100% + 1px); float: left;"><div class="os-resize-observer"></div></div><div class="os-content-glue" style="margin: 0px -8px;"></div><div class="os-padding"><div class="os-viewport os-viewport-native-scrollbars-invisible" style="overflow-y: scroll;"><div class="os-content" style="padding: 0px 8px; height: 100%; width: 100%;">
+
+    
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+          <li class="nav-item">
+            <a href="#" class="nav-link active">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>Reports<span class="badge badge-info right"></span></p></a>
+          </li> 
+          <li class="nav-item">
+            <a href="{{url_for('admin_gallery')}}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Gallery
+                
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>Upload Data<span class="badge badge-info right"></span></p></a>
+          </li> 
+          <li class="nav-item">
+            <a href="{{url_for('admin_logout')}}" class="nav-link">
+              <i class="nav-icon fas fa-copy"></i>
+              <p>Logout<span class="badge badge-info right"></span></p></a>
+          </li> 
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div></div></div><div class="os-scrollbar os-scrollbar-horizontal os-scrollbar-unusable os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="width: 100%; transform: translate(0px);"></div></div></div><div class="os-scrollbar os-scrollbar-vertical os-scrollbar-auto-hidden"><div class="os-scrollbar-track"><div class="os-scrollbar-handle" style="height: 45.9897%; transform: translate(0px);"></div></div></div><div class="os-scrollbar-corner"></div></div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper" style="min-height: 551px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Dashboard</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6">
+
+            <ol class="breadcrumb float-sm-right">
+              {%if session['user']%}
+                {{session['user']}}
+              {%else%}
+              Login
+              {%endif%}
+            </ol>
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <fieldset class="data-box text-center large">
+          <legend>Captured Data Records</legend>
+          <div class="row">
+            <div class="col-lg-4 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>400</h3>
+
+                  <p>Total Images</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-bag"></i>
+                </div>
+                <a href="#" class="small-box-footer"></a>
+              </div>
+
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-4 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>203</h3>
+
+                  <p>Female Data</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer"></i></a>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-4 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>197</h3>
+
+                  <p>Male Records</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer"></a>
+              </div>
+            </div>
+            
+          </div>
+        </fieldset>
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+          <div class="col"></div>
+          <section class="col-lg-8 col-sm-10 connectedSortable ui-sortable">
+
+            <div class="card-header">
+              <h3 class="card-title">Bar Chart</h3>
+
+              <div class="card-tools">
+                
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+                <canvas id="barChart"  bardata="{{bardata}}"style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 487px;" class="chartjs-render-monitor" width="487" height="250"></canvas>
+              </div>
+            </div>
+            <!-- /.card-body -->
+          </section>
+          <div class="col"></div>
+        </div>
+        <!-- /.row (main row) -->
+        <form method="POST" id="form" enctype="multipart/form-data" action="{{url_for('data_upload')}}">
+          <input class="form-control" name="file" type="file" accept=".csv"> 
+          <input type="submit" value="Submit">
+        </form>
+          
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <strong>The ANG group</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>ANG</b>
+    </div>
+  </footer>
+
+<script src="{{ url_for('static', filename='admin/dashboard/jquery.js' )}}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ url_for('static', filename='admin/dashboard/jquery-ui.js' )}}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{{ url_for('static', filename='admin/js/bootstrap.js' )}}"></script>
+<!-- ChartJS -->
+<script src="{{ url_for('static', filename='admin/dashboard/Chart.js' )}}"></script>
+<!-- Sparkline -->
+<!-- <script src="{{ url_for('static', filename='admin/dashboard/sparkline.js' )}}"></script> -->
+<!-- JQVMap -->
+<script src="{{ url_for('static', filename='admin/dashboard/jquery_004.js' )}}"></script>
+<script src="{{ url_for('static', filename='admin/dashboard/jquery_003.js')}}"></script>
+<!-- jQuery Knob Chart -->
+<script src="{{ url_for('static', filename='admin/dashboard/jquery_002.js' )}}"></script>
+<!-- daterangepicker -->
+<script src="{{ url_for('static', filename='admin/dashboard/moment.js' )}}"></script>
+<script src="{{ url_for('static', filename='admin/dashboard/daterangepicker.js' )}}"></script>
+<!-- Tempusdominus Bootstrap 4 -->
+<script src="{{ url_for('static', filename='admin/dashboard/tempusdominus-bootstrap-4.js' )}}"></script>
+<!-- Summernote -->
+<script src="{{ url_for('static', filename='admin/dashboard/summernote-bs4.js' )}}"></script>
+<!-- overlayScrollbars -->
+<script src="{{ url_for('static', filename='admin/dashboard/jquery_005.js' )}}"></script>
+<!-- AdminLTE App -->
+<script src="{{ url_for('static', filename='admin/dashboard/adminlte.js' )}}"></script>
+<!-- AdminLTE for demo purposes -->
+<!-- <script src="{{ url_for('static', filename='admin/dashboard/demo.js' )}}"></script> -->
+<!-- AdminLTE admin/dashboard demo (This is only for demo purposes) -->
+<script src="{{ url_for('static', filename='admin/dashboard/dashboard.js' )}}"></script>
+

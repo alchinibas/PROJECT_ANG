@@ -42,10 +42,13 @@
       <h3 class="float-md-start mb-0">ANG</h3>
       <nav class="nav nav-masthead justify-content-center float-md-end">
         <a class="nav-link" aria-current="page" href="/">Home</a>
-        <a class="nav-link" id="getapi"href="{{url_for('home')}}">GET API</a>
         <a class="nav-link active" href="{{url_for('api_help')}}">USING API</a>
         <a class="nav-link" href="{{ url_for('fv_home')}}">Test FV</a>
-        <a class="nav-link" href="{{url_for('gov_home')}}">GOV Demo</a>
+
+        {%if session['user'] %}
+        <a class="nav-link" href="{{url_for('gov_home')}}">Panel</a>
+        <a class="nav-link" href="{{url_for('admin_logout')}}">Logout</a>
+        {%endif%}
       </nav>
     </div>
   </header>

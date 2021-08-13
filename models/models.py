@@ -18,6 +18,22 @@ class Information(db.Model):
     def __repr__(self)->str:
         return f'{self.name}'
 
+class Result(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    age_group = db.Column(db.String(20))
+    gender=db.Column(db.String(20))
+    time = db.Column(db.DateTime, default=datetime.now)
+
+    def __repr__(self)->str:
+        return f'{self.age_group} - {self.gender} '
+
+class Admin(db.Model):
+    email=db.Column(db.String(100), primary_key=True)
+    password=db.Column(db.String(100), nullable=False)
+    user_type=db.Column(db.String(100),default="user")
+    def __repr__(self)->str:
+        return f'{self.email}'
+
 class Users(db.Model):
     email=db.Column(db.String(100),primary_key=True)
     session_started=db.Column(db.DateTime,default=datetime.utcnow)
