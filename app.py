@@ -5,24 +5,27 @@ from models.models import Information, Users, Result, Admin,db
 from data import data
 import csv
 import json
-import hashlib
+# import hashlib
 from os import listdir, path
 from PIL import Image
 from flask_socketio import SocketIO, emit      
 from io import BytesIO
 import base64
 from datetime import datetime
-
+import cv2
+import numpy
+from age_gender_classification import gadV2
 app = Flask(__name__)
 
 
 
 app.config['SQLALCHEMY_DATABASE_URI']="sqlite:///models/ang.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
-app.config['FILE_UPLOADS']='upload/'
+app.config['FILE_UPLOADS']='static/upload/'
 app.config['SECRET_KEY']='debian'
 # app.config['SERVER_NAME']="127.0.0.1:8000"
-app.config['DEBUG']=True
+
+
 
 sio=SocketIO(app)
 db = SQLAlchemy(app)
@@ -50,29 +53,36 @@ def api_help():
     return render_template("home/using_api.html")
 
 
+
 @sio.on('input image',namespace="/")
-def get_Image(response=False):
-    image_data = response.split(',')[1]
+def get_Image(response):
+    data = json.loads(response)
+    image_data = data["image"].split(',')[1]
     stream = BytesIO(base64.b64decode(image_data))
+    capture_value=data["capture"]
     img = Image.open(stream)
-
-    #img is an image file Do image processing here
-
+    cv2Image = cv2.cvtColor(numpy.array(img),cv2.COLOR_RGB2BGR)
+    # input = cv2.imread(cv2Image)
+    output ,errorCode,data,capture= gadV2.age_gender_detector(cv2Image,data["capture"])
     
-    # with open("static/upload/result_image/"+img_name+".jpg","w") as f:
-    save=False
-    #     f.write(image_data)
-    if save:
-        img_name = datetime.utcnow().strftime("%y%m%d%H%M%S%f")
-        img.save(f'static/upload/result_image/{img_name}.jpeg')
+    if not errorCode and capture==1 and capture_value==3:
+        age_group=f'{data[0][0]}-{data[0][1]}'
+        gender = data[1]
+        re = Result(age_group=age_group, gender=gender)
+        db.session.add(re)
+        db.session.commit()
 
-    #if result image is image binary: convert to base64 
-    base64Image = base64.b64encode(stream.getvalue()).decode()
-    # print(image_data[:50])
-    # print(base64Image)
-    #if result image is base64:
+        retval, buffer_img= cv2.imencode('.jpeg', output)
+        buffer_img = buffer_img.tobytes()
+        base64Image = base64.b64encode(buffer_img).decode()
+        message="Everyting is going good."
+    else:
+        message="Provide a single face (only)."
+        base64Image = base64.b64encode(stream.getvalue()).decode()
+
     image_data = f"data:image/jpeg;base64, {base64Image}"
-    emit('output image', {"image_data":image_data}, namespace="/")
+    
+    emit('output image', {"image_data":image_data,"message":message,"data":data,"capture":capture}, namespace="/")
     
 
 
@@ -158,10 +168,18 @@ def login_authenticate():
 
 @app.route('/admin/gallery')
 def admin_gallery():
+    male=0
+    female=0
+    for items in Result.query.all():
+        if items.gender=="Male":
+            male+=1
+        else:
+            female+=1
     file_path='static/upload/result_image'
     files =listdir(file_path) 
-    print(listdir(file_path))
-    return render_template('admin/gallery.html', images = files)
+    # print(listdir(file_path))
+    images=len(files)
+    return render_template('admin/gallery.html', images = files,data={"male":male,"female":female,"images":images})
 
 
 @app.route('/admin/logout')

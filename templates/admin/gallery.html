@@ -50,19 +50,13 @@
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Gallery
-                <span class="right badge badge-danger">New</span>
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{url_for('admin_home')}}" class="nav-link">
               <i class="nav-icon fas fa-copy"></i>
               <p>Reports<span class="badge badge-info right"></span></p></a>
-          </li> 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>Upload Data<span class="badge badge-info right"></span></p></a>
           </li> 
           <li class="nav-item">
             <a href="{{url_for('admin_logout')}}" class="nav-link">
@@ -105,11 +99,11 @@
         <fieldset class="data-box text-center large">
           <legend>Collected Images</legend>
           <div class="row">
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-3 col-6">
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>14</h3>
+                  <h3>{% if data.male %}{{data.male+data.female}}{%else%}14{%endif%}</h3>
 
                   <p>Total Images</p>
                 </div>
@@ -121,11 +115,25 @@
 
             </div>
             <!-- ./col -->
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-3 col-6">
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>0</h3>
+                  <h3>{% if data.female %}{{data.female}}{%else%}14{%endif%}</h3>
+
+                  <p>Female Data</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="#" class="small-box-footer"></i></a>
+              </div>
+            </div>
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3>{% if data.male %}{{data.male}}{%else%}14{%endif%}</h3>
 
                   <p>Female Data</p>
                 </div>
@@ -136,13 +144,13 @@
               </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-4 col-6">
+            <div class="col-lg-3 col-6">
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>14</h3>
+                  <h3>{% if data.male %}{{data.male+data.female-data.images}}{%else%}14{%endif%}</h3>
 
-                  <p>Male Records</p>
+                  <p>Records Lost</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-person-add"></i>

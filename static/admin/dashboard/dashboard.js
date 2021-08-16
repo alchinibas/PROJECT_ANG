@@ -72,12 +72,16 @@ $(function () {
   var labels = Object.keys(datas).sort();
   var male =[];
   var female=[];
-  console.log(labels);
   for (var i=0;i<labels.length;i++){
-    male.push(datas[labels[i]]['Male'])
-    female.push(datas[labels[i]]['Female'])
+    var dataMale=datas[labels[i]]['Male'];
+    var dataFemale=datas[labels[i]]['Female'];
+    male.push(dataMale?dataMale:0);
+    female.push(dataFemale?dataFemale:0);
   }
 
+  document.getElementById("maledata").innerHTML=male.reduce((a,b)=> a+b,0);
+  document.getElementById("femaledata").innerHTML=female.reduce((a,b)=> a+b,0);
+  document.getElementById("totaldata").innerHTML=male.reduce((a,b)=> a+b,0)+female.reduce((a,b)=> a+b,0);
   //barchart
   var areaChartData = {
     labels  : labels,

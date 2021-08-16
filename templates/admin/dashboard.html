@@ -119,9 +119,9 @@
               <!-- small box -->
               <div class="small-box bg-info">
                 <div class="inner">
-                  <h3>400</h3>
+                  <h3 id="totaldata">400</h3>
 
-                  <p>Total Images</p>
+                  <p>Total Records</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-bag"></i>
@@ -135,7 +135,7 @@
               <!-- small box -->
               <div class="small-box bg-success">
                 <div class="inner">
-                  <h3>203</h3>
+                  <h3 id="femaledata">203</h3>
 
                   <p>Female Data</p>
                 </div>
@@ -150,7 +150,7 @@
               <!-- small box -->
               <div class="small-box bg-warning">
                 <div class="inner">
-                  <h3>197</h3>
+                  <h3 id="maledata">197</h3>
 
                   <p>Male Records</p>
                 </div>
@@ -186,10 +186,7 @@
           <div class="col"></div>
         </div>
         <!-- /.row (main row) -->
-        <form method="POST" id="form" enctype="multipart/form-data" action="{{url_for('data_upload')}}">
-          <input class="form-control" name="file" type="file" accept=".csv"> 
-          <input type="submit" value="Submit">
-        </form>
+
           
         </div>
       </div><!-- /.container-fluid -->
